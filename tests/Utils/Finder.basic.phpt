@@ -81,7 +81,7 @@ test('recursive file & directory search in child-first order', function () {
 
 
 test('recursive file & directory search excluding folders', function () {
-	$finder = Finder::find('file.txt')->from('files')->exclude('images')->exclude('subdir2', '*.txt');
+	$finder = Finder::find('file.txt')->from('files')->exclude('images')->exclude('subdir2');
 	Assert::same([
 		'files/file.txt',
 		'files/subdir/file.txt',
@@ -106,10 +106,10 @@ test('recursive directory search', function () {
 });
 
 
-test('getSubPathName', function () {
+test('getRelativePathName', function () {
 	$res = [];
-	foreach ($iterator = Finder::findFiles('file.txt')->from('files')->getIterator() as $foo) {
-		$res[$iterator->getSubPathName()] = true;
+	foreach (Finder::findFiles('file.txt')->from('files') as $foo) {
+		$res[$foo->getRelativePathName()] = true;
 	}
 
 	Assert::same(
@@ -121,27 +121,14 @@ test('getSubPathName', function () {
 
 test('empty args', function () {
 	$finder = Finder::find()->in('files');
-	Assert::same([
-		'files/file.txt',
-		'files/images',
-		'files/subdir',
-	], export($finder));
+	Assert::same([], export($finder));
 
 	$finder = Finder::findFiles()->in('files');
-	Assert::same([
-		'files/file.txt',
-	], export($finder));
+	Assert::same([], export($finder));
 
 	$finder = Finder::findDirectories()->in('files');
-	Assert::same([
-		'files/images',
-		'files/subdir',
-	], export($finder));
+	Assert::same([], export($finder));
 
 	$finder = Finder::find()->exclude()->in('files');
-	Assert::same([
-		'files/file.txt',
-		'files/images',
-		'files/subdir',
-	], export($finder));
+	Assert::same([], export($finder));
 });

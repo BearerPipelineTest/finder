@@ -48,11 +48,11 @@ How to find all `*.txt` files in `$dir` directory and all its subdirectories?
 ```php
 foreach (Finder::findFiles('*.txt')->from($dir) as $key => $file) {
 	// $key is a string containing absolute filename with path
-	// $file is an instance of SplFileInfo
+	// $file is an instance of Nette\Utils\FileInfo
 }
 ```
 
-The files in the `$file` variable are instances of the `SplFileInfo` class.
+The files in the `$file` variable are instances of the `Nette\Utils\FileInfo` class.
 
 If the directory does not exist, an `Nette\UnexpectedValueException` is thrown.
 
@@ -113,7 +113,7 @@ Finder::findFiles('*.txt')
 	->exclude('*X*')
 ```
 
-If `exclude()` is specified **after** `from()`, it applies to crawled subdirectories:
+And use `exclude()` to skip crawled subdirectories:
 
 ```php
 Finder::findFiles('*.php')
@@ -148,7 +148,7 @@ Both functions understand the operators `>`, `>=`, `<`, `<=`, `=`, `!=`.
 Here we traverse PHP files with number of lines greater than 1000. As a filter we use a custom callback:
 
 ```php
-$hasMoreThan100Lines = function (SplFileInfo $file): bool {
+$hasMoreThan100Lines = function (FileInfo $file): bool {
 	return count(file($file->getPathname())) > 1000;
 };
 

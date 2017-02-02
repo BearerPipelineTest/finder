@@ -37,10 +37,6 @@ test('recursive', function () {
 		'files/images/logo.gif',
 		'files/subdir/subdir2/file.txt',
 	], export($finder));
-
-	Assert::exception(function () {
-		Finder::find('*')->from('files/subdir/subdir2')->from('files/images');
-	}, Nette\InvalidStateException::class, '');
 });
 
 
@@ -56,8 +52,4 @@ test('non-recursive', function () {
 		'files/images/logo.gif',
 		'files/subdir/subdir2/file.txt',
 	], export($finder));
-
-	Assert::exception(function () {
-		Finder::find('*')->in('files/subdir/subdir2')->in('files/images');
-	}, Nette\InvalidStateException::class, '');
 });
