@@ -127,11 +127,40 @@ test('anchored', function () {
 });
 
 
-test('multidirs mask', function () {
+test('anchored multidirs mask', function () {
 	$finder = Finder::findFiles('./**/f*')->from('files');
 	Assert::same([
 		'files/file.txt',
 		'files/subdir/file.txt',
+		'files/subdir/subdir2/file.txt',
+	], export($finder));
+});
+
+
+test('multidirs recursive mask', function () {
+	$finder = Finder::findFiles('**/f*')->from('files');
+	Assert::same([
+		'files/file.txt',
+		'files/subdir/file.txt',
+		'files/subdir/subdir2/file.txt',
+	], export($finder));
+});
+
+
+test('multidirs non-recursive mask', function () {
+	$finder = Finder::findFiles('**/f*')->in('files');
+	Assert::same([
+		'files/file.txt',
+	], export($finder));
+});
+
+
+test('multidirs leading mask', function () {
+	$finder = Finder::find('s*/**')->from('files');
+	Assert::same([
+		'files/subdir/file.txt',
+		'files/subdir/readme',
+		'files/subdir/subdir2',
 		'files/subdir/subdir2/file.txt',
 	], export($finder));
 });
