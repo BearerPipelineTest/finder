@@ -26,7 +26,7 @@ use RecursiveIteratorIterator;
  *
  * @implements \IteratorAggregate<string, \SplFileInfo>
  */
-class Finder implements \IteratorAggregate, \Countable
+class Finder implements \IteratorAggregate
 {
 	use Nette\SmartObject;
 
@@ -176,14 +176,6 @@ class Finder implements \IteratorAggregate, \Countable
 
 
 	/********************* iterator generator ****************d*g**/
-
-
-	/** @deprecated */
-	public function count(): int
-	{
-		trigger_error('Nette\Utils\Finder::count is deprecated.', E_USER_DEPRECATED);
-		return iterator_count($this->getIterator());
-	}
 
 
 	/**
