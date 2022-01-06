@@ -13,14 +13,16 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 
-function export($iterator)
+function export($iterator, bool $sort = true)
 {
 	$arr = [];
 	foreach ($iterator as $key => $value) {
 		$arr[] = strtr($key, '\\', '/');
 	}
 
-	sort($arr);
+	if ($sort) {
+		sort($arr);
+	}
 	return $arr;
 }
 
@@ -80,7 +82,7 @@ test('recursive file & directory search in child-first order', function () {
 		'files/file.txt',
 		'files/subdir/file.txt',
 		'files/subdir/subdir2/file.txt',
-	], export($finder));
+	], export($finder, false));
 });
 
 
