@@ -33,6 +33,12 @@ test('non-recursive file search', function () {
 });
 
 
+test('non-recursive file search alt', function () {
+	$finder = (new Finder)->files('file.txt')->in('files');
+	Assert::same(['files/file.txt'], export($finder));
+});
+
+
 test('recursive file search', function () {
 	$finder = Finder::findFiles('file.txt')->from('files');
 	Assert::same([
@@ -91,6 +97,14 @@ test('recursive file & directory search excluding folders', function () {
 
 test('non-recursive directory search', function () {
 	$finder = Finder::findDirectories('subdir*')->in('files');
+	Assert::same([
+		'files/subdir',
+	], export($finder));
+});
+
+
+test('non-recursive directory search alt', function () {
+	$finder = (new Finder)->directories('subdir*')->in('files');
 	Assert::same([
 		'files/subdir',
 	], export($finder));
